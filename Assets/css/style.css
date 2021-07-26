@@ -12,18 +12,6 @@ body {
   background: linear-gradient(0deg, rgba(19,41,61,1) 0%, rgba(237,245,249,1) 63%);
 }
 
-.reset-button {
-  font-size: 16px;
-  height: 30px;
-  line-height: 8px;
-  margin-top: 20px;
-}
-
-.win-loss-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-}
 
 button {
   background: radial-gradient(circle, rgba(240,230,140,1) 0%, rgba(187,96,33,0.9542191876750701) 100%);
@@ -64,15 +52,6 @@ section {
   border-radius: 8px;
 }
 
-.word-guess {
-  width: 55vw;
-  height: 400px;
-}
-
-.results {
-  width: 30vw;
-  height: 400px;
-}
 
 .card {
   /* background: radial-gradient(circle, rgba(240,230,140,1) 0%, rgba(187,124,33,0.604079131652661) 100%);
@@ -84,12 +63,9 @@ section {
   padding: 20px;
 }
 
-.word-blanks {
-  line-height: 360px;
-}
 
 .large-font {
-  font-size: 3.5em;
+  font-size: 50px;
   text-align:center;
 }
 
@@ -107,7 +83,7 @@ section {
 }
 
 .timer-text {
-  font-size: 8px;
+  font-size: 10px;
 }
 
 @media screen and (max-width: 1183px) {
@@ -115,10 +91,6 @@ section {
     flex-direction: column;
   }
 
-  .word-guess,
-  .results {
-    width: 90vw;
-  }
 
   section {
     background-color: white;
@@ -132,11 +104,6 @@ section {
     font-size: 2em;
   }
 
-  .reset-button {
-    font-size: 12px;
-    width: 20ox;
-    
-  }
 
   .timer {
     height: 200px;
