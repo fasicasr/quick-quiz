@@ -30,6 +30,12 @@ button {
   margin-top: 0.6em;
 }
 
+.hide{
+  /* opacity: 0; */
+  /* pointer-events: none; */
+  display: none;
+}
+
 header {
   padding: 40px;
   text-align: center;

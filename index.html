@@ -22,19 +22,42 @@
     </header>
 
     <main>
-      <section id="quiz" style="display: none">
-        <div id= "questionList" class="card" >
-        <div id="answer" >
-          <button class="answerOption" id="A" onclick="answerPicked('A')" >A</button>
-          <button class="answerOption" id="B" onclick="answerPicked('B')" >B</button>
-          <button class="answerOption" id="C" onclick="answerPicked('C')" >C</button>
-          <button class="answerOption" id="D" onclick="answerPicked('D')" >D</button>
-        </div>
-        </div>
+      <section id="quiz">
+        <article>
+            <div id="question"></div>
+            <div id="answers"></div>
+            <div id="result"></div>
+        </article>
+        <article id="finalResults">
+            <div id="gameOver" class="hide">
+                Out of time!
+                <button class="restart">Go back</button>
+            </div>
+            <div id="gameComplete" class="hide">
+                <h2 class="title">All done!</h2>
+                <p>Your final score is <num class="score"></num></p>
+                <div>
+                    Enter your initials
+                    <input id="initails" type="text" value="" />
+                    <button id="submitLeader">Submit</button>
+                </div>
+            </div>
+        </article>
+       
+        <!-- <div id= "questionList" class="card" >
+            <div id="answer" >
+            <button class="answerOption" id="A" onclick="answerPicked('A')" >A</button>
+            <button class="answerOption" id="B" onclick="answerPicked('B')" >B</button>
+            <button class="answerOption" id="C" onclick="answerPicked('C')" >C</button>
+            <button class="answerOption" id="D" onclick="answerPicked('D')" >D</button>
+            </div>
+        </div> -->
       </section>
 
       
     </main>
-    <script src="assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
+    <!-- <script src="assets/js/script2.js"></script> -->
+
   </body>
 </html>
