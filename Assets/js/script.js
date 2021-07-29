@@ -3,7 +3,11 @@ const timerElement = document.querySelector(".timer-count");
 const questionElement = document.querySelector("#question");
 const answerWrapper = document.querySelector("#answers");
 const resultWrapper = document.querySelector("#result");
-
+const finalResults = document.querySelector("#finalResults");
+const gameoverWrapper = document.querySelector("#finalResults #gameOver");
+const gamecompleteWrapper = document.querySelector("#finalResults #gameComplete");
+const leaderWrapper = document.querySelector("#leaderboard");
+const restartBtn = document.querySelector(".restart");
 
 
 
@@ -12,18 +16,28 @@ let timerCount = startTime;
 let currentQuestion = 0;
 const timeLost = 10;
 let finalScore;
+let isPaused = false;
 
 
-startButton.addEventListener('click',startQuiz);
+startButton.addEventListener('click',startGame);
 
 //Function to start the game
-function startQuiz(){
-    //  alert('game is about to start');
+function startGame(){
+    setupRestart();//  alert('game is about to start');
     startButton.classList.add('hide'); //button is hidden from page once clicked
     //Call start timer function
     runTimer();
-    //Set First Qustion
+    //Set First Question
     nextQuestion();
+}
+
+function setupRestart(){
+    //remove hidden classes when restarting
+    questionElement.classList.remove('hide');
+    answerWrapper.classList.remove('hide');
+    resultWrapper.classList.remove('hide');
+    resultWrapper.innerHTML = "";
+
 }
 
 
@@ -31,9 +45,7 @@ function startQuiz(){
 //Function to go to the next question
 function nextQuestion(){
     const totalQuestions = questions.length;
-
-    console.log(currentQuestion);
-
+    // console.log(currentQuestion);
     if(currentQuestion < totalQuestions){
         showQuestion(questions[currentQuestion]);
     } else {
@@ -41,16 +53,17 @@ function nextQuestion(){
             endGame();
         },1000);
     }
-
- console.log('total questions '+totalQuestions);
- console.log('current question '+currentQuestion);
-
+//  console.log('total questions '+totalQuestions);
+//  console.log('current question '+currentQuestion);
  currentQuestion++;
 }
 
 function showQuestion(question){
-     console.log(question);
-
+    //hide result from previous question
+    setTimeout(function(){
+        resultWrapper.classList.add('hide');
+    },1500);
+    //  console.log(question);
     //clear any questions showing
     while (answerWrapper.firstChild) {
         answerWrapper.removeChild(answerWrapper.firstChild);
@@ -69,7 +82,6 @@ function showQuestion(question){
         button.addEventListener('click', checkAnswer);
         // finally add each button created in this loop to the DIV created in the HTML and set here as the variable 'answerWrapper'
         answerWrapper.appendChild(button);
-
  });
 }
 
@@ -79,18 +91,20 @@ function checkAnswer(e){
     const correct = selectedButton.dataset.correct
     //
     if(correct){
-        console.log('correct');
+        // console.log('correct');
         nextQuestion();
         showResult(true);
     } else {
-        console.log('wrong');
+        // console.log('wrong');
         //minus time
         minusTime();
+        nextQuestion();
         showResult(false);
     }
 }
 
 function showResult(answerCorrect){
+    resultWrapper.classList.toggle('hide');
     // const button = document.createElement('button');//create element using JS while assigning it to a variable
     resultWrapper.innerHTML = "";
     if(answerCorrect){
@@ -112,6 +126,8 @@ function minusTime(){
 
 //function counting down
 function runTimer(){
+    console.log(isPaused)
+    // if(!isPaused){
     timer = setInterval(function() {
         if(timerCount <= 0){
             endGame(true);
@@ -124,13 +140,16 @@ function runTimer(){
 
 
 
-// Function to End Game
+// Function to End Quiz
 function endGame(timeOver){
+    finalResults.classList.remove('hide');//when restarting game
     //Hide quiz elements 
     questionElement.classList.add('hide');
     answerWrapper.classList.add('hide');
     resultWrapper.classList.add('hide');
-    timerElement.classList.add('hide');
+    //  runTimer(isPaused=true);
+    timerElement.textContent = 0; //empty clock
+    clearInterval(timer);//pause countdown
 
     finalScore = timerCount;//update final score variable
 
@@ -148,7 +167,44 @@ function endGame(timeOver){
     }
 }
 
+function leaderBoard(){
+    let userInitial = document.querySelector("#initails").value;
+    const user = document.querySelector("#userLeader");
+    const clearBtn = document.querySelector("#clearScores");
 
+
+    finalResults.classList.add('hide');//hide final results DIV already in the HTML
+    leaderWrapper.classList.remove('hide');
+    user.innerHTML = userInitial+" - "+finalScore;
+//  console.log('leaders here');
+//  console.log(finalScore);
+//  console.log(userInitial);
+    user.classList.remove('hide');//when restarting
+    clearBtn.addEventListener('click',function(){
+        user.classList.add('hide');
+    });
+}
+
+//Click event to restart quiz
+restartBtn.addEventListener('click',reStart);
+
+function reStart(){
+    timerElement.textContent = startTime; //empty clock
+    console.log('restart');
+    timerCount = startTime;//adds 75 secs back
+    //Hide LeaderBoard
+    leaderWrapper.classList.add('hide');
+    //Show quiz elements 
+    questionElement.classList.add('hide');
+    answerWrapper.classList.add('hide');
+    resultWrapper.classList.add('hide');
+    timerElement.classList.remove('hide');
+    //show Start button
+    startButton.classList.remove('hide');
+    //Set Current question back to 0 
+    currentQuestion = 0;
+    // console.log('restart');
+}
 
 //question list 
 let questions = [
@@ -216,3 +272,16 @@ let questions = [
     ]
   }
 ]
+
+
+//GIVEN I am taking a code quiz
+// WHEN I click the start button
+// THEN a timer starts and I am presented with a question
+// WHEN I answer a question
+// THEN I am presented with another question
+// WHEN I answer a question incorrectly
+// THEN time is subtracted from the clock
+// WHEN all questions are answered or the timer reaches 0
+// THEN the game is over
+// WHEN the game is over
+// THEN I can save my initials and my score

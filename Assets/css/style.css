@@ -18,7 +18,7 @@ button {
   border-radius: 8px;
   color: #13293d;
   cursor: pointer;
-  font-size: 2em;
+  font-size: 1em;
   letter-spacing: 0.21px;
   line-height: 16px;
   max-width: 255px;
@@ -28,6 +28,11 @@ button {
   transition-property: background-color;
   transition-timing-function: linear;
   margin-top: 0.6em;
+  margin-right: 10px;
+}
+
+button:hover{
+  background: radial-gradient(circle, rgba(187,96,33,0.9542191876750701) 0%,rgba(240,230,140,1) 100%);
 }
 
 .hide{
@@ -56,6 +61,17 @@ section {
   margin-top: 50px;
   background-color: white;
   border-radius: 8px;
+}
+
+article{
+ padding: 20px;
+ font-size: 22px;
+}
+
+#result{
+  position: relative;
+  top: 10px;
+  opacity: 0.5;
 }
 
 
